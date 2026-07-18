@@ -1,3 +1,6 @@
+#include "io.h"
+#include "keyboard.h"
+
 #define COLOR_BLUE   0x0B
 #define COLOR_GREEN  0x02
 #define COLOR_RED    0x04
@@ -11,6 +14,7 @@ void scroll(void);
 void set_color(unsigned char color);
 void backspace(void);
 void kernel_main(void){
+    keyboard_init();
     clear_screen();
     print("HELLO ");
     print("GUAOS!\n");

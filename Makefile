@@ -15,9 +15,14 @@ build/boot.o: boot/boot.asm
 
 build/kernel.o: kernel/kernel.c
 	$(CC) $(CFLAGS) -c kernel/kernel.c -o build/kernel.o
+build/keyboard.o: kernel/keyboard.c
+	$(CC) $(CFLAGS) -c kernel/keyboard.c -o build/keyboard.o
+build/io.o: kernel/io.c
+	$(CC) $(CFLAGS) -c kernel/io.c -o build/io.o
 
-build/kernel.elf: build/boot.o build/kernel.o linker.ld
-	$(LD) -m elf_i386 -T linker.ld -o build/kernel.elf build/boot.o build/kernel.o
+build/kernel.elf: build/boot.o build/kernel.o build/io.o build/keyboard.o linker.ld
+	$(LD) -m elf_i386 -T linker.ld -o build/kernel.elf \
+		build/boot.o build/kernel.o build/io.o build/keyboard.o
 
 $(ISO): build/kernel.elf
 	mkdir -p iso/boot
